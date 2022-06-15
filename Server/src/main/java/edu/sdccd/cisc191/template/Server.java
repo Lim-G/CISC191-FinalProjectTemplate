@@ -121,7 +121,7 @@ public class Server {
     public int findIndexOf(String givenString) {
         int count = 0;
         for (int i = 0; i < parkingLot.length; i++) {
-            if (givenString == parkingLot[i]) {
+            if (givenString.equals(parkingLot[i])) {
                 return count;
             }
             else {
