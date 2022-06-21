@@ -19,7 +19,7 @@ public class Server {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private String[] parkingLot;
+    private String[][] parkingLot;
     private String userInput;
     private Boolean running;
 
@@ -45,7 +45,7 @@ public class Server {
     }
 
     public void makeConsole() {
-        this.parkingLot = new String[10];
+        this.parkingLot = new String[10][10];
         running = true;
         while (running) {
             System.out.println("Array Modding Console");
@@ -53,21 +53,25 @@ public class Server {
             System.out.println("Do you want to \n 1. getAtIndex \n 2. setAtIndex \n 3. findIndexOf \n 4. printAll \n 5. deleteAtIndex \n 6. expand \n 7. shrink \n 8. exit");
             Scanner input = new Scanner(System.in);
             userInput = input.nextLine();
-            int givenInteger;
+            int givenRow;
+            int givenColumn;
             String givenString;
             switch (userInput) {
                 case "getAtIndex":
-                    System.out.println("Give a number");
-                    givenInteger = input.nextInt();
-                    System.out.println(getAtIndex(givenInteger));
+                    System.out.println("Give a row");
+                    givenRow = input.nextInt();
+                    System.out.println("Give a column");
+                    givenColumn = input.nextInt();
+                    System.out.println(getAtIndex(givenRow, givenColumn));
                     break;
                 case "setAtIndex":
-                    System.out.println("Give a number");
-                    givenInteger = input.nextInt();
-                    input.nextLine();
+                    System.out.println("Give a row");
+                    givenRow = input.nextInt();
+                    System.out.println("Give a column");
+                    givenColumn = input.nextInt();
                     System.out.println("Give a string.");
                     givenString = input.nextLine();
-                    setAtIndex(givenString, givenInteger);
+                    setAtIndex(givenString, givenRow, givenColumn);
                     break;
                 case "findIndexOf":
                     System.out.println("Give a string.");
@@ -78,19 +82,25 @@ public class Server {
                     System.out.println(printAll());
                     break;
                 case "deleteAtIndex":
-                    System.out.println("Give a number");
-                    givenInteger = input.nextInt();
-                    deleteAtIndex(givenInteger);
+                    System.out.println("Give a row");
+                    givenRow = input.nextInt();
+                    System.out.println("Give a column");
+                    givenColumn = input.nextInt();
+                    deleteAtIndex(givenRow, givenColumn);
                     break;
                 case "expand":
-                    System.out.println("Give a number");
-                    givenInteger = input.nextInt();
-                    expand(givenInteger);
+                    System.out.println("How many rows would you like to add?");
+                    givenRow = input.nextInt();
+                    System.out.println("How many columns would you like to add?");
+                    givenColumn = input.nextInt();
+                    expand(givenRow, givenColumn);
                     break;
                 case "shrink":
-                    System.out.println("Give a number");
-                    givenInteger = input.nextInt();
-                    shrink(givenInteger);
+                    System.out.println("How many rows would you like to shrink by?");
+                    givenRow = input.nextInt();
+                    System.out.println("How many columns would you like to shrink by?");
+                    givenColumn = input.nextInt();
+                    shrink(givenRow, givenColumn);
                     break;
                 case "exit":
                     running = false;
@@ -100,82 +110,85 @@ public class Server {
     }
 
 
-    public String getAtIndex(int givenInt) {
-        if (givenInt > parkingLot.length) {
+    public String getAtIndex(int givenRow, int givenColumn) {
+        if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
             return "Sorry this does not exist";
         }
         else {
-            return parkingLot[givenInt];
+            return parkingLot[givenRow][givenColumn];
         }
     }
 
-    public void setAtIndex(String givenString, int givenInt) {
-        if (givenInt > parkingLot.length) {
+    public void setAtIndex(String givenString, int givenRow, int givenColumn) {
+        if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
             System.out.println("Sorry this spot is out of bounds");
         }
         else {
-            parkingLot[givenInt] = givenString;
+            parkingLot[givenRow][givenColumn] = givenString;
         }
     }
 
-    public int findIndexOf(String givenString) {
-        int count = 0;
-        for (int i = 0; i < parkingLot.length; i++) {
-            if (givenString.equals(parkingLot[i])) {
-                return count;
-            }
-            else {
-                count++;
+    public String findIndexOf(String givenString) {
+        int row = 0;
+        int column = 0;
+        for (row = 0; row < parkingLot.length; row++) {
+            for (column = 0; column < parkingLot[0].length; column++) {
+                if (givenString.equals(parkingLot[row][column])) {
+                    return "row: " + row + " , column: " + column ;
+                }
             }
         }
-        return count;
+        return  "row: " + row + " , column: " + column ;
     }
 
     public String printAll() {
         String printedArray = "";
-        for (int i = 0; i < parkingLot.length; i++) {
-            printedArray += parkingLot[i] + ", ";
+        int row = 0;
+        int column = 0;
+        for (row = 0; row < parkingLot.length; row++) {
+            for (column = 0; column < parkingLot[0].length; column++) {
+                printedArray += (" " + parkingLot[row][column] + " ");
+            }
         }
         return printedArray;
     }
 
-    public void deleteAtIndex(int givenInt) {
-        String[] newParkingLot;
-        newParkingLot = new String[parkingLot.length-1];
-        if (givenInt < 0 || givenInt > parkingLot.length) {
+    public void deleteAtIndex(int givenRow, int givenColumn) {
+        if (givenRow < 0 || givenRow > parkingLot.length || givenColumn < 0 || givenColumn > parkingLot[0].length) {
             System.out.println("Index out of range!");
         }
         else {
-            for (int i = 0; i < givenInt; i++) {
-                newParkingLot [i] = parkingLot [i];
-            }
-            for (int i = givenInt+1; i < parkingLot.length; i++) {
-                newParkingLot[i-1] = parkingLot[i];
-            }
+            parkingLot[givenRow][givenColumn] = null;
         }
-        parkingLot = newParkingLot;
-        return;
     }
 
-    public void expand(int givenInt) {
-        String[] newParkingLot;
-        newParkingLot = new String[parkingLot.length + givenInt];
-        for (int i = 0; i < parkingLot.length; i++) {
-            newParkingLot[i] = parkingLot[i];
+    public void expand(int givenRow, int givenColumn) {
+        String[][] newParkingLot;
+        newParkingLot = new String[parkingLot.length + givenRow][parkingLot[0].length + givenColumn];
+        int row = 0;
+        int column = 0;
+        for (row = 0; row < parkingLot.length; row++) {
+            for (column = 0; column < parkingLot[0].length; column++) {
+                newParkingLot[row][column] = parkingLot[row][column];
+            }
         }
         parkingLot = newParkingLot;
     }
 
-    public void shrink(int givenInt) {
-        String[] newParkingLot;
-        if (givenInt > parkingLot.length) {
+    public void shrink(int givenRow, int givenColumn) {
+        String[][] newParkingLot;
+        int row = 0;
+        int column = 0;
+        if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
             System.out.println("Can't shrink by that much.");
             return;
         }
         else {
-            newParkingLot = new String[parkingLot.length - givenInt];
-            for (int i = 0; i < newParkingLot.length; i++) {
-                newParkingLot[i] = parkingLot[i];
+            newParkingLot = new String[parkingLot.length - givenRow][parkingLot[0].length - givenColumn];
+            for (row = 0; row < newParkingLot.length; row++) {
+                for (column = 0; column < newParkingLot[0].length; column++) {
+                    newParkingLot[row][column] = parkingLot[row][column];
+                }
             }
         }
         parkingLot = newParkingLot;
