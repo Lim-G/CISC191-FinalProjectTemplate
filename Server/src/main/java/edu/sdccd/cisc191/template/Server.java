@@ -4,6 +4,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+
 /**
  * This program is a server that takes connection requests on
  * the port specified by the constant LISTENING_PORT.  When a
@@ -20,6 +21,8 @@ public class Server {
     private PrintWriter out;
     private BufferedReader in;
     private String[][] parkingLot;
+
+    private ParkingLot parkingLotA;
     private String userInput;
     private Boolean running;
 
@@ -45,49 +48,64 @@ public class Server {
     }
 
     public void makeConsole() {
-        this.parkingLot = new String[10][10];
+        //this.parkingLot = new String[10][2];
+        parkingLotA = new ParkingLot();
         running = true;
         while (running) {
-            System.out.println("Array Modding Console");
+            System.out.println("Parking Lot Console");
             System.out.println("_____________________");
-            System.out.println("Do you want to \n 1. getAtIndex \n 2. setAtIndex \n 3. findIndexOf \n 4. printAll \n 5. deleteAtIndex \n 6. expand \n 7. shrink \n 8. exit");
+            System.out.println("Do you want to: \n1. getCarInfo \n2. parkCar \n3. findCar \n4. printParkingLot \n5. removeCar \n6. exit");
+
             Scanner input = new Scanner(System.in);
             userInput = input.nextLine();
             int givenRow;
             int givenColumn;
             String givenString;
             switch (userInput) {
-                case "getAtIndex":
+                case "getCarInfo":
                     System.out.println("Give a row");
                     givenRow = input.nextInt();
                     System.out.println("Give a column");
                     givenColumn = input.nextInt();
-                    System.out.println(getAtIndex(givenRow, givenColumn));
+                    System.out.println(parkingLotA.getCarInfo(givenRow, givenColumn));
                     break;
-                case "setAtIndex":
+                case "parkCar":
+                    System.out.println("Give a make");
+                    String givenMake = input.nextLine();
+                    System.out.println("Give a model");
+                    String givenModel = input.nextLine();
+                    System.out.println("Give a license palte");
+                    String givenPlate = input.nextLine();
+                    System.out.println("Give a color");
+                    String givenColor = input.nextLine();
+                    System.out.println("Give a year");
+                    int givenYear = input.nextInt();
+                    Car givenCar = new Car(givenMake, givenModel, givenPlate, givenColor, givenYear);
                     System.out.println("Give a row");
                     givenRow = input.nextInt();
                     System.out.println("Give a column");
                     givenColumn = input.nextInt();
-                    System.out.println("Give a string.");
+                    parkingLotA.parkCar(givenCar, givenRow, givenColumn);
+                    break;
+                case "findCar":
+                    System.out.println("Give a license plate.");
                     givenString = input.nextLine();
-                    setAtIndex(givenString, givenRow, givenColumn);
+                    System.out.println(parkingLotA.findCar(givenString));
                     break;
-                case "findIndexOf":
-                    System.out.println("Give a string.");
-                    givenString = input.nextLine();
-                    System.out.println(findIndexOf(givenString));
+                case "printParkingLot":
+                    System.out.println(parkingLotA.printParkingLot());
                     break;
-                case "printAll":
-                    System.out.println(printAll());
-                    break;
-                case "deleteAtIndex":
+                case "removeCar":
                     System.out.println("Give a row");
                     givenRow = input.nextInt();
                     System.out.println("Give a column");
                     givenColumn = input.nextInt();
-                    deleteAtIndex(givenRow, givenColumn);
+                    parkingLotA.removeCar(givenRow, givenColumn);
                     break;
+                case "exit":
+                    running = false;
+                    break;
+                    /*
                 case "expand":
                     System.out.println("How many rows would you like to add?");
                     givenRow = input.nextInt();
@@ -102,9 +120,9 @@ public class Server {
                     givenColumn = input.nextInt();
                     shrink(givenRow, givenColumn);
                     break;
-                case "exit":
-                    running = false;
-                    break;
+                     */
+
+
             }
         }
     }
@@ -198,7 +216,6 @@ public class Server {
         Server server = new Server();
         try {
             server.start(4444);
-            System.out.println("testing testing");
             server.makeConsole();
             server.stop();
         } catch(Exception e) {
