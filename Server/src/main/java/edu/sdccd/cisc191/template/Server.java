@@ -20,7 +20,7 @@ public class Server {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private String[][] parkingLot;
+    //private String[][] parkingLot;
 
     private ParkingLot parkingLotA;
     private String userInput;
@@ -79,7 +79,7 @@ public class Server {
                     System.out.println("Give a color");
                     String givenColor = input.nextLine();
                     System.out.println("Give a year");
-                    int givenYear = input.nextInt();
+                    String givenYear = input.nextLine();
                     Car givenCar = new Car(givenMake, givenModel, givenPlate, givenColor, givenYear);
                     System.out.println("Give a row");
                     givenRow = input.nextInt();
@@ -127,7 +127,7 @@ public class Server {
         }
     }
 
-
+/*
     public String getAtIndex(int givenRow, int givenColumn) {
         if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
             return "Sorry this does not exist";
@@ -211,6 +211,8 @@ public class Server {
         }
         parkingLot = newParkingLot;
     }
+
+ */
 
     public static void main(String[] args) {
         Server server = new Server();

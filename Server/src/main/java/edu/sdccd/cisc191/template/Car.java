@@ -3,11 +3,11 @@ package edu.sdccd.cisc191.template;
 public class Car {
     public String make;
     public String model;
-    public int year;
+    public String year;
     public String licensePlate;
     public String color;
 
-    public Car(String givenMake, String givenModel, String givenLicensePlate, String givenColor, int givenYear) {
+    public Car(String givenMake, String givenModel, String givenLicensePlate, String givenColor, String givenYear) {
         this.make = givenMake;
         this.model = givenModel;
         this.year = givenYear;

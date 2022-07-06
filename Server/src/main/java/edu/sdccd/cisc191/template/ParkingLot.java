@@ -3,14 +3,14 @@ package edu.sdccd.cisc191.template;
 public class ParkingLot {
     public Car[][] parkingLot;
 
-    Car carA = new Car("Ford", "Mustang", "123AIGHT", "Blue", 2018);
-    Car carB = new Car("Mazda", "Miata", "234AIGHT", "Red", 2022);
-    Car carC = new Car("Honda", "Civic Type R", "345AIGHT", "Green", 2019);
-    Car carD = new Car("Kia", "Sorrento", "456AIGHT", "Silver", 2011);
-    Car carE = new Car("Lexus", "RC500", "567AIGHT", "Red", 2018);
-    Car carF = new Car("BMW", "M3", "678AIGHT", "White", 2018);
-    Car carG = new Car("Mercedes Benz", "C300", "789AIGHT", "Black", 2018);
-    Car carH = new Car("Infinity", "G36", "890AIGHT", "Black", 2018);
+    Car carA = new Car("Ford", "Mustang", "123AIGHT", "Blue", "2018");
+    Car carB = new Car("Mazda", "Miata", "234AIGHT", "Red", "2022");
+    Car carC = new Car("Honda", "Civic Type R", "345AIGHT", "Green", "2019");
+    Car carD = new Car("Kia", "Sorrento", "456AIGHT", "Silver", "2011");
+    Car carE = new Car("Lexus", "RC500", "567AIGHT", "Red", "2018");
+    Car carF = new Car("BMW", "M3", "678AIGHT", "White", "2018");
+    Car carG = new Car("Mercedes Benz", "C300", "789AIGHT", "Black", "2018");
+    Car carH = new Car("Infinity", "G36", "890AIGHT", "Black", "2018");
 
 
     public ParkingLot() {
@@ -48,7 +48,10 @@ public class ParkingLot {
         int column = 0;
         for (row = 0; row < parkingLot.length; row++) {
             for (column = 0; column < parkingLot[0].length; column++) {
-                if (givenLicensePlate.equals(parkingLot[row][column].getLicensePlate())) {
+                if (parkingLot[row][column] == null) {
+                    continue;
+                }
+                else if (givenLicensePlate.equals(parkingLot[row][column].getLicensePlate())) {
                     return "row: " + row + " , column: " + column ;
                 }
             }
