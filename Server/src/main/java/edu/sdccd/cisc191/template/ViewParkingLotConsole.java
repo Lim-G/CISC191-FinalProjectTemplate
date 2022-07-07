@@ -1,22 +1,19 @@
 package edu.sdccd.cisc191.template;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.geometry.Insets;
-import javafx.scene.layout.Pane;
 
+/**
+ * This class is for the creation of the GUI that hosts the Parking Lot array.
+ */
 public class ViewParkingLotConsole extends Application {
 
     private CarInfoButton carInfoButton;
@@ -46,7 +43,9 @@ public class ViewParkingLotConsole extends Application {
 
     private TextArea outputText = new TextArea();
 
-
+    /**
+     * This Method is for clearing all inoput and output fields
+     */
     public void clearAllSpaces() {
         makeField.setText("");
         modelField.setText("");
@@ -62,6 +61,13 @@ public class ViewParkingLotConsole extends Application {
         launch();
     }
 
+    /**
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set. The primary stage will be embedded in
+     * the browser if the application was launched as an applet.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages and will not be embedded in the browser.
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -71,7 +77,7 @@ public class ViewParkingLotConsole extends Application {
          * The initialization of buttons and then setting up the action events
          * What the buttons do is in the name
          */
-        //----------------------------------------------------//
+        //----------------------------------------------------// Returns Car info at given row and column coordinates
         CarInfoButton carInfoButton = new CarInfoButton();
         carInfoButton.setOnAction(e -> {
             if (parkingLot.isCar(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()))) {
@@ -83,7 +89,7 @@ public class ViewParkingLotConsole extends Application {
             }
         });
         carInfoButton.setPadding(LABEL_PADDING);
-        //----------------------------------------------------//
+        //----------------------------------------------------// Parks a newly created car using elements from the input fields
         ParkCarButton parkCarButton = new ParkCarButton();
         parkCarButton.setOnAction(e -> {
             Car tempCar = new Car(makeField.getText(), modelField.getText(), licensePlateField.getText(), colorField.getText(), yearField.getText());
@@ -96,21 +102,21 @@ public class ViewParkingLotConsole extends Application {
             }
         });
         parkCarButton.setPadding(LABEL_PADDING);
-        //----------------------------------------------------//
+        //----------------------------------------------------// Finds a car using a user given license plate field
         FindCarButton findCarButton = new FindCarButton();
         findCarButton.setOnAction(e -> {
             String carSpot = parkingLot.findCar(licensePlateField.getText());
             outputText.setText(carSpot);
         });
         findCarButton.setPadding(LABEL_PADDING);
-        //----------------------------------------------------//
+        //----------------------------------------------------// Prints the entire lot, requires no input from user
         PrintLotButton printLotButton = new PrintLotButton();
         printLotButton.setOnAction(e -> {
             String printedLot = parkingLot.printParkingLot();
             outputText.setText(printedLot);
         });
         printLotButton.setPadding(LABEL_PADDING);
-        //----------------------------------------------------//
+        //----------------------------------------------------// Removes car at user given row and column coordinates
         RemoveCarButton removeCarButton = new RemoveCarButton();
         removeCarButton.setOnAction(e -> {
             if (parkingLot.outOfBounds(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()))) {
@@ -122,7 +128,7 @@ public class ViewParkingLotConsole extends Application {
             }
         });
         removeCarButton.setPadding(LABEL_PADDING);
-        //----------------------------------------------------//
+        //----------------------------------------------------// Clears all input and output fields.
         ClearAllButton clearAllButton = new ClearAllButton();
         clearAllButton.setOnAction(e -> {
             clearAllSpaces();
@@ -130,6 +136,7 @@ public class ViewParkingLotConsole extends Application {
         clearAllButton.setPadding(LABEL_PADDING);
         //----------------------------------------------------//
 
+        //The creation of the input fields using HBoxes to combine a label and a text field
         HBox makeBox = new HBox(makeLabel, makeField);
         makeBox.setSpacing(10);
         HBox modelBox = new HBox(modelLabel, modelField);
@@ -145,7 +152,7 @@ public class ViewParkingLotConsole extends Application {
         HBox columnBox = new HBox(columnLabel, columnField);
         columnBox.setSpacing(10);
 
-
+        //Rest of this is setting up the GUI scene elements.
         BorderPane root = new BorderPane();
 
         VBox buttonBox = new VBox(carInfoButton, parkCarButton, findCarButton, printLotButton, removeCarButton, clearAllButton);
