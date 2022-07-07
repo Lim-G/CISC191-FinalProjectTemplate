@@ -95,6 +95,10 @@ public class ParkingLot {
         }
     }
 
+    public Car getCar(int givenRow, int givenColumn) {
+        return parkingLot[givenRow][givenColumn];
+    }
+
     public Boolean isCar(int givenRow, int givenColumn) {
         if (parkingLot[givenRow][givenColumn] != null) {
             isCar = true;
