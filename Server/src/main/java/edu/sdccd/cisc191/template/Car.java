@@ -24,23 +24,5 @@ public class Car {
         return licensePlate;
     }
 
-    /*
-    public String getMake() {
-        return this.make;
-    }
-
-    public String getModel() {
-        return this.model;
-    }
-
-
-    public String getColor() {
-        return this.color;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-     */
 
 }

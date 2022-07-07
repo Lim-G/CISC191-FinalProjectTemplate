@@ -2,6 +2,9 @@ package edu.sdccd.cisc191.template;
 
 public class ParkingLot {
     public Car[][] parkingLot;
+    public Boolean isCar = false;
+
+    public Boolean outOfBounds = false;
 
     Car carA = new Car("Ford", "Mustang", "123AIGHT", "Blue", "2018");
     Car carB = new Car("Mazda", "Miata", "234AIGHT", "Red", "2022");
@@ -85,38 +88,24 @@ public class ParkingLot {
         }
     }
 
-    //This stuff is not applicable to a parking lot.
-    /*
-    public void expand(int givenRow, int givenColumn) {
-        String[][] newParkingLot;
-        newParkingLot = new String[parkingLot.length + givenRow][parkingLot[0].length + givenColumn];
-        int row = 0;
-        int column = 0;
-        for (row = 0; row < parkingLot.length; row++) {
-            for (column = 0; column < parkingLot[0].length; column++) {
-                newParkingLot[row][column] = parkingLot[row][column];
-            }
-        }
-        parkingLot = newParkingLot;
-    }
-
-    public void shrink(int givenRow, int givenColumn) {
-        String[][] newParkingLot;
-        int row = 0;
-        int column = 0;
-        if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
-            System.out.println("Can't shrink by that much.");
-            return;
+    public Boolean isCar(int givenRow, int givenColumn) {
+        if (parkingLot[givenRow][givenColumn] != null) {
+            isCar = true;
         }
         else {
-            newParkingLot = new String[parkingLot.length - givenRow][parkingLot[0].length - givenColumn];
-            for (row = 0; row < newParkingLot.length; row++) {
-                for (column = 0; column < newParkingLot[0].length; column++) {
-                    newParkingLot[row][column] = parkingLot[row][column];
-                }
-            }
+            isCar = false;
         }
-        parkingLot = newParkingLot;
+        return isCar;
     }
-    */
+
+    public Boolean outOfBounds(int givenRow, int givenColumn) {
+        if (givenRow > parkingLot.length || givenColumn > parkingLot[0].length) {
+            outOfBounds = true;
+        }
+        else {
+            outOfBounds = false;
+        }
+        return outOfBounds;
+    }
+
 }

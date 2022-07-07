@@ -1,21 +1,24 @@
 package edu.sdccd.cisc191.template;
 
-import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javax.swing.*;
-import java.awt.*;
+import javafx.scene.layout.HBox;
+
 
 public class CustomTextPanel{
-    public JLabel myLabel;
-    public JTextField myTextField = new JTextField();
-    public JPanel panel = new JPanel(new BorderLayout());
+    public Label makeLabel = new Label("Make:");
+    public TextField myTextField = new TextField();
+
+    public HBox customBox;
 
     public CustomTextPanel(String givenLabel) {
-        myLabel.setText(givenLabel);
-        panel.add(myLabel,BorderLayout.WEST);
-        panel.add(myTextField,BorderLayout.CENTER);
-        panel.setPreferredSize(new Dimension(200, 50));
+        makeLabel.setText(givenLabel);
+        HBox customBox = new HBox(makeLabel, myTextField);
+        customBox.setSpacing(10);
+    }
+
+    public HBox getHBox() {
+        return this.customBox;
     }
 
     public String getText() {
