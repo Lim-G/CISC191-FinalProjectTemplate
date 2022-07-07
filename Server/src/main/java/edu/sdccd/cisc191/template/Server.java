@@ -22,7 +22,7 @@ public class Server {
     private BufferedReader in;
     //private String[][] parkingLot;
 
-    private ParkingLot parkingLotA;
+    //private ParkingLot parkingLotA;
     private String userInput;
     private Boolean running;
 
@@ -48,11 +48,12 @@ public class Server {
     }
 
     public void makeConsole() {
-        //this.parkingLot = new String[10][2];
-        parkingLotA = new ParkingLot();
+        //parkingLotA = new ParkingLot();
         running = true;
         while (running) {
-            //ViewParkingLotConsole console = new ViewParkingLotConsole();
+            ViewParkingLotConsole console = new ViewParkingLotConsole();
+            //console.start(Stage);
+            /*
             System.out.println("Parking Lot Console");
             System.out.println("_____________________");
             System.out.println("Do you want to: \n1. getCarInfo \n2. parkCar \n3. findCar \n4. printParkingLot \n5. removeCar \n6. exit");
@@ -106,9 +107,11 @@ public class Server {
                 case "exit":
                     running = false;
                     break;
+
+             */
             }
         }
-    }
+
 
     public static void main(String[] args) {
         Server server = new Server();
