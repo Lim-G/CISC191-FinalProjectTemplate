@@ -26,16 +26,6 @@ public class ViewParkingLotConsole extends Application {
     private RemoveCarButton removeCarButton;
     private ClearAllButton clearAllButton;
 
-    /*
-    CustomTextPanel makeTextPanel;
-    CustomTextPanel modelTextPanel;
-    CustomTextPanel colorTextPanel;
-    CustomTextPanel yearTextPanel;
-    CustomTextPanel licensePlateTextPanel;
-    CustomTextPanel rowTextPanel;
-    CustomTextPanel columnTextPanel;
-     */
-
     private TextField makeField = new TextField();
     private Label makeLabel = new Label("Make:");
     private TextField modelField = new TextField();
@@ -100,9 +90,6 @@ public class ViewParkingLotConsole extends Application {
             if (parkingLot.isCar(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()))) {
                 outputText.setText("Spot is taken");
             }
-            //else if (parkingLot.outOfBounds(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()))){
-            //   outputText.setText("Spot out of bounds");
-            //}
             else{
                 parkingLot.parkCar(tempCar, Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()));
                 outputText.setText("Parked");
@@ -111,12 +98,29 @@ public class ViewParkingLotConsole extends Application {
         parkCarButton.setPadding(LABEL_PADDING);
         //----------------------------------------------------//
         FindCarButton findCarButton = new FindCarButton();
+        findCarButton.setOnAction(e -> {
+            String carSpot = parkingLot.findCar(licensePlateField.getText());
+            outputText.setText(carSpot);
+        });
         findCarButton.setPadding(LABEL_PADDING);
         //----------------------------------------------------//
         PrintLotButton printLotButton = new PrintLotButton();
+        printLotButton.setOnAction(e -> {
+            String printedLot = parkingLot.printParkingLot();
+            outputText.setText(printedLot);
+        });
         printLotButton.setPadding(LABEL_PADDING);
         //----------------------------------------------------//
         RemoveCarButton removeCarButton = new RemoveCarButton();
+        removeCarButton.setOnAction(e -> {
+            if (parkingLot.outOfBounds(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()))) {
+                outputText.setText("Out of Bounds");
+            }
+            else {
+                parkingLot.removeCar(Integer.parseInt(rowField.getText()), Integer.parseInt(columnField.getText()));
+                outputText.setText("Removed.");
+            }
+        });
         removeCarButton.setPadding(LABEL_PADDING);
         //----------------------------------------------------//
         ClearAllButton clearAllButton = new ClearAllButton();
@@ -141,15 +145,6 @@ public class ViewParkingLotConsole extends Application {
         HBox columnBox = new HBox(columnLabel, columnField);
         columnBox.setSpacing(10);
 
-        /*
-        CustomTextPanel makeTextPanel = new CustomTextPanel("Make:");
-        CustomTextPanel modelTextPanel = new CustomTextPanel("Model:");
-        CustomTextPanel colorTextPanel = new CustomTextPanel("Color:");
-        CustomTextPanel yearTextPanel = new CustomTextPanel("Year:");
-        CustomTextPanel licensePlateTextPanel = new CustomTextPanel("License PLate:");
-        CustomTextPanel rowTextPanel = new CustomTextPanel("Row:");
-        CustomTextPanel columnTextPanel = new CustomTextPanel("Column:");
-        */
 
         BorderPane root = new BorderPane();
 
@@ -163,11 +158,11 @@ public class ViewParkingLotConsole extends Application {
 
         HBox centerBox = new HBox(buttonBox, inputBox);
 
-        outputText.setPrefHeight(10000);
-        outputText.setPrefWidth(500);
+        outputText.setPrefHeight(5000);
+        outputText.setPrefWidth(200);
 
         root.setCenter(centerBox);
-        root.setBottom(outputText);
+        root.setRight(outputText);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

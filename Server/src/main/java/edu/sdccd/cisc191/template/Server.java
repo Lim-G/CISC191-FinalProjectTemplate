@@ -52,6 +52,7 @@ public class Server {
         parkingLotA = new ParkingLot();
         running = true;
         while (running) {
+            //ViewParkingLotConsole console = new ViewParkingLotConsole();
             System.out.println("Parking Lot Console");
             System.out.println("_____________________");
             System.out.println("Do you want to: \n1. getCarInfo \n2. parkCar \n3. findCar \n4. printParkingLot \n5. removeCar \n6. exit");
